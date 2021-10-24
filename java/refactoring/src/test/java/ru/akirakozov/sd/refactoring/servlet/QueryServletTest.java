@@ -28,7 +28,7 @@ class QueryServletTest extends BaseTest {
         insert(Arrays.asList(new Product("bed", 100),
                 new Product("flat", 200),
                 new Product("cap", 5)));
-        formQuery("max", "<h1>Product with max price: </h1>", "flat\t200</br>\r\n");
+        formQuery("max", "<h1>Product with max price: </h1>", "flat\t200</br>\n");
 
     }
 
@@ -42,23 +42,23 @@ class QueryServletTest extends BaseTest {
         insert(Arrays.asList(new Product("bed", 1),
                 new Product("flat", 2),
                 new Product("cup", 1)));
-        formQuery("min", "<h1>Product with min price: </h1>", "bed\t1</br>\r\n");
+        formQuery("min", "<h1>Product with min price: </h1>", "bed\t1</br>\n");
     }
 
     @Test
     public void emptySumCommandTest() throws IOException {
-        formQuery("sum", "Summary price: ", "0\r\n");
+        formQuery("sum", "Summary price: ", "0\n");
     }
 
     @Test
     public void sumCommandTest() throws IOException, SQLException {
         insert(Arrays.asList(new Product("bed", 1), new Product("flat", 2)));
-        formQuery("sum", "Summary price: ", "3\r\n");
+        formQuery("sum", "Summary price: ", "3\n");
     }
 
     @Test
     public void emptyCountCommandTest() throws IOException {
-        formQuery("count", "Number of products: ", "0\r\n");
+        formQuery("count", "Number of products: ", "0\n");
     }
 
     @Test
@@ -66,7 +66,7 @@ class QueryServletTest extends BaseTest {
         insert(Arrays.asList(new Product("bed", 1),
                 new Product("flat", 2),
                 new Product("cup", 3)));
-        formQuery("count", "Number of products: ", "3\r\n");
+        formQuery("count", "Number of products: ", "3\n");
     }
 
     private void testCommand(String command, String result) throws IOException {
@@ -76,39 +76,11 @@ class QueryServletTest extends BaseTest {
     }
 
     private void formQuery(String command, String commandHeader, String result) throws IOException {
-        String query = "<html><body>\r\n" +
-                commandHeader + "\r\n" +
+        String query = "<html><body>\n" +
+                commandHeader + "\n" +
                 result +
                 "</body></html>\r\n";
         testCommand(command, query);
-    }
-
-    private void maxTest(String result) throws IOException {
-        testCommand("max", "<html><body>\r\n" +
-                "<h1>Product with max price: </h1>\r\n" +
-                result +
-                "</body></html>\r\n");
-    }
-
-    private void minTest(String result) throws IOException {
-        testCommand("min", "<html><body>\r\n" +
-                "<h1>Product with min price: </h1>\r\n" +
-                result +
-                "</body></html>\r\n");
-    }
-
-    private void countTest(String result) throws IOException {
-        testCommand("count", "<html><body>\r\n" +
-                "Number of products: \r\n" +
-                result +
-                "</body></html>\r\n");
-    }
-
-    private void sumTest(String result) throws IOException {
-        testCommand("sum", "<html><body>\r\n" +
-                "Summary price: \r\n" +
-                result +
-                "</body></html>\r\n");
     }
 
 

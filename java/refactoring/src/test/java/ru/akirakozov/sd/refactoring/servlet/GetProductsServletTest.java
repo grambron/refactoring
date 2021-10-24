@@ -17,7 +17,7 @@ public class GetProductsServletTest extends BaseTest {
     @Test
     public void emptyTest() throws IOException {
         servlet.doGet(request, response);
-        String expected = "<html><body>\r\n" +
+        String expected = "<html><body>\n" +
                 "</body></html>\r\n";
 
         assertEquals(expected, getWritten());
@@ -28,8 +28,8 @@ public class GetProductsServletTest extends BaseTest {
         insert(Collections.singletonList(new Product("bed", 800)));
 
         servlet.doGet(request, response);
-        String expected = "<html><body>\r\n" +
-                "bed\t800</br>\r\n" +
+        String expected = "<html><body>\n" +
+                "bed\t800</br>\n" +
                 "</body></html>\r\n";
 
         assertEquals(expected, getWritten());
@@ -41,9 +41,9 @@ public class GetProductsServletTest extends BaseTest {
                 , new Product("flat", 10_000)));
 
         servlet.doGet(request, response);
-        String expected = "<html><body>\r\n" +
-                "bed\t800</br>\r\n" +
-                "flat\t10000</br>\r\n" +
+        String expected = "<html><body>\n" +
+                "bed\t800</br>\n" +
+                "flat\t10000</br>\n" +
                 "</body></html>\r\n";
 
         assertEquals(expected, getWritten());

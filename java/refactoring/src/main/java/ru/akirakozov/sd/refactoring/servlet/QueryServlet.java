@@ -1,6 +1,7 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
 import ru.akirakozov.sd.refactoring.database.ProductDatabase;
+import ru.akirakozov.sd.refactoring.html.HtmlFormatter;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,49 +20,40 @@ public class QueryServlet extends HttpServlet {
 
     private final ProductDatabase productDatabase = new ProductDatabase();
 
+    private final HtmlFormatter formatter = new HtmlFormatter();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String command = request.getParameter("command");
 
         if ("max".equals(command)) {
-            PrintWriter writer = response.getWriter();
-            writer.println("<html><body>");
-            writer.println("<h1>Product with max price: </h1>");
 
-            productDatabase.maxByPrice().ifPresent(product -> {
-                writer.println(product.getName() + "\t" + product.getPrice() + "</br>");
-            });
-
-            writer.println("</body></html>");
+            String label = "Product with max price: ";
+            productDatabase.maxByPrice().ifPresentOrElse(product -> {
+                formatter.setHtml(response, formatter.productToView(label, product));
+            }, () -> formatter.setHtml(response, formatter.emptyProductView(label)));
 
         } else if ("min".equals(command)) {
-            PrintWriter writer = response.getWriter();
-            writer.println("<html><body>");
-            writer.println("<h1>Product with min price: </h1>");
 
-            productDatabase.minByPrice().ifPresent(product -> {
-                writer.println(product.getName() + "\t" + product.getPrice() + "</br>");
-            });
+            String label = "Product with min price: ";
+            productDatabase.minByPrice().ifPresentOrElse(product -> {
+                formatter.setHtml(response, formatter.productToView(label, product));
+            }, () -> formatter.setHtml(response, formatter.emptyProductView(label)));
 
-            writer.println("</body></html>");
         } else if ("sum".equals(command)) {
-            PrintWriter writer = response.getWriter();
-            writer.println("<html><body>");
-            writer.println("Summary price: ");
-            writer.println(productDatabase.sum());
-            writer.println("</body></html>");
+
+            String html = formatter.dataView("Summary price: ", productDatabase.sum());
+            formatter.setHtml(response, html);
+
         } else if ("count".equals(command)) {
-            PrintWriter writer = response.getWriter();
-            writer.println("<html><body>");
-            writer.println("Number of products: ");
-            writer.println(productDatabase.count());
-            writer.println("</body></html>");
+
+            String html = formatter.dataView("Number of products: ", productDatabase.count());
+            formatter.setHtml(response, html);
+
         } else {
-            response.getWriter().println("Unknown command: " + command);
+            formatter.setHtml(response, "Unknown command: " + command);
         }
 
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
     }
 
 }
