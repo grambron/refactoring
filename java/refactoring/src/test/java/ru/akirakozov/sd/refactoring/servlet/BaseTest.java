@@ -16,6 +16,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.akirakozov.sd.refactoring.config.Constants.JDBC_URL;
+
 
 public class BaseTest {
 
@@ -47,7 +49,7 @@ public class BaseTest {
     }
 
     protected void insert(List<Product> products) throws SQLException {
-        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
+        try (Connection c = DriverManager.getConnection(JDBC_URL)) {
             for (Product product : products) {
                 Statement statement = c.createStatement();
                 statement.executeUpdate("INSERT INTO PRODUCT (NAME, PRICE) VALUES (\"" + product.getName() + "\"," + product.getPrice() + ")");
@@ -58,7 +60,7 @@ public class BaseTest {
 
     protected List<Product> selectAllRows() throws SQLException {
         List<Product> result = new ArrayList<>();
-        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
+        try (Connection c = DriverManager.getConnection(JDBC_URL)) {
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT");
 
@@ -75,7 +77,7 @@ public class BaseTest {
     }
 
     protected static void execute(String sql) throws SQLException {
-        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
+        try (Connection c = DriverManager.getConnection(JDBC_URL)) {
             Statement statement = c.createStatement();
             statement.executeUpdate(sql);
             statement.close();

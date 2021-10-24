@@ -2,11 +2,13 @@ package ru.akirakozov.sd.refactoring.database;
 
 import java.sql.*;
 
+import static ru.akirakozov.sd.refactoring.config.Constants.JDBC_URL;
+
 public abstract class Database {
     private final String urlConnection;
 
     public Database() {
-        this("jdbc:sqlite:test.db");
+        this(JDBC_URL);
     }
 
     public Database(String urlConnection) {

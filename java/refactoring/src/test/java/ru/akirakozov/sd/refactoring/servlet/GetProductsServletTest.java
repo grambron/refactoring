@@ -1,7 +1,9 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
 import org.junit.jupiter.api.Test;
+import ru.akirakozov.sd.refactoring.database.ProductDatabase;
 import ru.akirakozov.sd.refactoring.entity.Product;
+import ru.akirakozov.sd.refactoring.html.HtmlFormatter;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -12,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetProductsServletTest extends BaseTest {
 
-    private final GetProductsServlet servlet = new GetProductsServlet();
+    private final GetProductsServlet servlet = new GetProductsServlet(new ProductDatabase(), new HtmlFormatter());
 
     @Test
     public void emptyTest() throws IOException {

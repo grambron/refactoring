@@ -13,9 +13,14 @@ import java.io.IOException;
  */
 public class GetProductsServlet extends HttpServlet {
 
-    private final ProductDatabase productDatabase = new ProductDatabase();
+    private final ProductDatabase productDatabase;
 
-    private final HtmlFormatter formatter = new HtmlFormatter();
+    private final HtmlFormatter formatter;
+
+    public GetProductsServlet(ProductDatabase productDatabase, HtmlFormatter formatter) {
+        this.productDatabase = productDatabase;
+        this.formatter = formatter;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

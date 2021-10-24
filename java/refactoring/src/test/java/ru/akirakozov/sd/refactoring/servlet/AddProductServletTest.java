@@ -1,7 +1,9 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
 import org.junit.jupiter.api.Test;
+import ru.akirakozov.sd.refactoring.database.ProductDatabase;
 import ru.akirakozov.sd.refactoring.entity.Product;
+import ru.akirakozov.sd.refactoring.html.HtmlFormatter;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 class AddProductServletTest extends BaseTest {
-    private final AddProductServlet servlet = new AddProductServlet();
+    private final AddProductServlet servlet = new AddProductServlet(new ProductDatabase(), new HtmlFormatter());
 
     @Test
     public void emptyParamsTest() {
