@@ -5,11 +5,11 @@ import ru.akirakozov.sd.refactoring.database.ProductDatabase;
 import ru.akirakozov.sd.refactoring.entity.Product;
 import ru.akirakozov.sd.refactoring.html.HtmlFormatter;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 class AddProductServletTest extends BaseTest {
@@ -21,7 +21,7 @@ class AddProductServletTest extends BaseTest {
     }
 
     @Test
-    public void simpleAddingTest() throws IOException, SQLException {
+    public void simpleAddingTest() throws SQLException {
         when(request.getParameter("name")).thenReturn("bed");
         when(request.getParameter("price")).thenReturn("1000");
         servlet.doGet(request, response);

@@ -5,7 +5,6 @@ import ru.akirakozov.sd.refactoring.database.ProductDatabase;
 import ru.akirakozov.sd.refactoring.entity.Product;
 import ru.akirakozov.sd.refactoring.html.HtmlFormatter;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,7 +16,7 @@ public class GetProductsServletTest extends BaseTest {
     private final GetProductsServlet servlet = new GetProductsServlet(new ProductDatabase(), new HtmlFormatter());
 
     @Test
-    public void emptyTest() throws IOException {
+    public void emptyTest() {
         servlet.doGet(request, response);
         String expected = "<html><body>\n" +
                 "</body></html>\r\n";
@@ -26,7 +25,7 @@ public class GetProductsServletTest extends BaseTest {
     }
 
     @Test
-    public void oneElementTest() throws SQLException, IOException {
+    public void oneElementTest() throws SQLException {
         insert(Collections.singletonList(new Product("bed", 800)));
 
         servlet.doGet(request, response);
@@ -38,7 +37,7 @@ public class GetProductsServletTest extends BaseTest {
     }
 
     @Test
-    public void manyElementsTest() throws IOException, SQLException {
+    public void manyElementsTest() throws SQLException {
         insert(Arrays.asList(new Product("bed", 800)
                 , new Product("flat", 10_000)));
 

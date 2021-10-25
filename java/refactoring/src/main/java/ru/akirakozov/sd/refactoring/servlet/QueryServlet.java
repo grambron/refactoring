@@ -6,12 +6,6 @@ import ru.akirakozov.sd.refactoring.html.HtmlFormatter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  * @author akirakozov
@@ -28,22 +22,22 @@ public class QueryServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String command = request.getParameter("command");
 
         if ("max".equals(command)) {
 
             String label = "Product with max price: ";
-            productDatabase.maxByPrice().ifPresentOrElse(product -> {
-                formatter.setHtml(response, formatter.productToView(label, product));
-            }, () -> formatter.setHtml(response, formatter.emptyProductView(label)));
+            productDatabase.maxByPrice().ifPresentOrElse(product ->
+                    formatter.setHtml(response, formatter.productToView(label, product)),
+                    () -> formatter.setHtml(response, formatter.emptyProductView(label)));
 
         } else if ("min".equals(command)) {
 
             String label = "Product with min price: ";
-            productDatabase.minByPrice().ifPresentOrElse(product -> {
-                formatter.setHtml(response, formatter.productToView(label, product));
-            }, () -> formatter.setHtml(response, formatter.emptyProductView(label)));
+            productDatabase.minByPrice().ifPresentOrElse(product ->
+                    formatter.setHtml(response, formatter.productToView(label, product)),
+                    () -> formatter.setHtml(response, formatter.emptyProductView(label)));
 
         } else if ("sum".equals(command)) {
 

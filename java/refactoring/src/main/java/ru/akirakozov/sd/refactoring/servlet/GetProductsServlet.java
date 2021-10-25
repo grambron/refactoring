@@ -23,7 +23,7 @@ public class GetProductsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         formatter.setHtml(response, formatter.productsToView(productDatabase.getAll()));
     }
 }
